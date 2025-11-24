@@ -35,10 +35,10 @@ AForm *Intern::makeForm(const std::string& formName,  const std::string& target)
     {
         if (formName == name[i])
         {
-            std::cout << "Intern create" << std::endl;
+            std::cout << "Intern create" <<  std::endl;
             return (functions[i])(target);
         }
     }
-    std::cout << "Intern couldn't find the form" << std::endl;
+    std::cout << "Intern couldn't find the form" <<  std::endl;
     return NULL;
 }

@@ -5,6 +5,17 @@ PresidentialPardonForm::PresidentialPardonForm(const std::string& t)
 
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& copy) : AForm(copy), target(copy.target) {}
+
+PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm& other)
+{
+    if (this != &other)
+    {
+
+        target = other.target;
+    }
+    return (*this);
+}
 
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {

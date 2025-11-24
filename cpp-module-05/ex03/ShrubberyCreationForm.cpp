@@ -5,6 +5,14 @@ ShrubberyCreationForm::ShrubberyCreationForm(const std::string& t)
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& copy) : AForm(copy), target(copy.target) {}
+
+ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
+{
+    if (this != &other)
+        target = other.target;
+    return *this;
+}
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {

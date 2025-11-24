@@ -5,6 +5,16 @@ RobotomyRequestForm::RobotomyRequestForm(const std::string& t)
 
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& copy) : AForm(copy), target(copy.target) {}
+
+RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
+{
+    if (this != &other)
+    {
+        target = other.target;
+    }
+    return *this;
+}
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {

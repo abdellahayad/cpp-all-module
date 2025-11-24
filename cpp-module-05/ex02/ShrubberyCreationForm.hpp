@@ -13,6 +13,8 @@ class ShrubberyCreationForm : public AForm
         std::string target;
     public:
         ShrubberyCreationForm(const std::string& t);
+        ShrubberyCreationForm(const ShrubberyCreationForm& copy);
+        ShrubberyCreationForm& operator=(const ShrubberyCreationForm& other);
         ~ShrubberyCreationForm();
         
         void execute(Bureaucrat const &executor) const;
