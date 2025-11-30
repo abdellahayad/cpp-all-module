@@ -31,7 +31,7 @@ Character &Character::operator=(const Character& other)
         }
     }
 
-     for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
         if (other.inventory[i])
             inventory[i] = other.inventory[i]->clone();

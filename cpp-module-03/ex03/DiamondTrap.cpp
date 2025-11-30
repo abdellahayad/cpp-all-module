@@ -10,7 +10,7 @@ DiamondTrap::DiamondTrap()
     std::cout << "DiamondTrap " << name << " created(default)." << std::endl;
 }
 
-DiamondTrap::DiamondTrap(std::string _name)
+DiamondTrap::DiamondTrap(std::string _name) 
 {
     name = _name;
     ClapTrap::name = name + "_clap_name";

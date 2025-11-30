@@ -12,7 +12,7 @@ int main()
         AForm *form;
         Bureaucrat bureaucrat("abdellah", 1);
         std::cout << "==================" << std::endl;
-        form = intern.makeForm("shrubbery creation", "home");
+        form = intern.makeForm("shrubbery creation", "dorms");
         if (form)
         {
             std::cout << *form << std::endl;
@@ -22,7 +22,7 @@ int main()
             delete form;
         }
         std::cout << "==================" << std::endl;
-        form = intern.makeForm("robotomy request", "home");
+        form = intern.makeForm("robotomy request", "dorms");
         if (form)
         {
             std::cout << *form << std::endl;
@@ -32,7 +32,7 @@ int main()
             delete form;
         }
         std::cout << "==================" <<  std::endl;
-        form = intern.makeForm("presidential pardon", "home");
+        form = intern.makeForm("presidential pardon", "dorms");
         if (form)
         {
             std::cout << *form << std::endl;
@@ -42,7 +42,7 @@ int main()
             delete form;
         }
         std::cout << "==================" <<  std::endl;
-        form = intern.makeForm("Unknown Form", "home");
+        form = intern.makeForm("Unknown Form", "dorms");
         if (form)
         {
             std::cout << *form << std::endl;
