@@ -1,9 +1,9 @@
-NAME = BAse
+NAME = Base
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp  Base.cpp
+SRC = main.cpp  base.cpp
 
 OBJ = $(SRC:.cpp=.o)
 DEPS =  Base.hpp

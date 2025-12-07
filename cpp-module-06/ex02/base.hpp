@@ -2,7 +2,9 @@
 #define BASE_HPP
 
 #include <iostream>
-
+#include <ctime>
+#include <exception>
+#include <cstdlib>
 
 class Base
 {

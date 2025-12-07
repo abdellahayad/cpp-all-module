@@ -9,6 +9,7 @@ int main()
     const AAnimal* j = new Dog();
     const AAnimal* i = new Cat();
 
+
     j->makeSound();
     i->makeSound();
     
