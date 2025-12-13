@@ -15,7 +15,7 @@ static bool is_int(const std::string &s)
 
 static bool is_float(const std::string &s)
 {
-    if (s == "+inff" || s == "-inff" || s == "nanf")
+    if (s == "inff" || s == "+inff" || s == "-inff" || s == "nanf" || s == "+nanf" || s == "-nanf")
         return (true);
 
     if (s[s.size() - 1] != 'f')
@@ -31,7 +31,7 @@ static bool is_float(const std::string &s)
 
 static bool is_double(const std::string &s)
 {
-    if (s == "+inf" || s == "-inf" || s == "nan")
+    if (s == "inf" || s == "+inf" || s == "-inf" || s == "nan" || s == "+nan" || s == "-nan")
         return (true);
 
     std::istringstream iss(s);
@@ -103,10 +103,10 @@ const char *ScalarConverterException::what() const throw()
 void ScalarConverter::convert(const std::string &literal)
 {
     double value;
-
+    
     if (is_char(literal))
         value = literal[0];
-
+    
     else if (is_int(literal))
     {
         std::stringstream ss(literal);
@@ -115,12 +115,12 @@ void ScalarConverter::convert(const std::string &literal)
 
     else if (is_float(literal))
     {
-        if (literal == "+inff")
-            value = 1.0 / 0.0;
+        if (literal == "+inff" || literal == "inff")
+            value = INFINITY;
         else if (literal == "-inff")
-            value = -1.0 / 0.0;
-        else if (literal == "nanf")
-            value = 0.0 / 0.0;
+            value = -INFINITY;
+        else if (literal == "nanf" || literal == "+nanf" || literal == "-nanf")
+            value = NAN;
         else
         {
             std::string core = literal.substr(0, literal.size() - 1);
@@ -131,15 +131,16 @@ void ScalarConverter::convert(const std::string &literal)
 
     else if (is_double(literal))
     {
-        if (literal == "+inf")
-            value = 1.0 / 0.0;
+       if (literal == "+inf" || literal == "inf")
+            value = INFINITY;
         else if (literal == "-inf")
-            value = -1.0 / 0.0;
-        else if (literal == "nan")
-            value = 0.0 / 0.0;
+            value = -INFINITY;
+        else if (literal == "nan" || literal == "+nan" || literal == "-nan" )
+            value = NAN;
         else
         {
             std::stringstream ss(literal);
+            std::cout << ss.str() << std::endl;
             ss >> value;
         }
     }
