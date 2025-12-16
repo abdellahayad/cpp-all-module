@@ -4,23 +4,23 @@
 #include <iostream>
 #include <exception>
 
-
 template <typename t>
 class Array
 {
 private:
-    t* array;
+    t *array;
     unsigned int _size;
+
 public:
     Array() : array(NULL), _size(0) {}
 
-    Array(unsigned int n): array(NULL),  _size(n)
+    Array(unsigned int n) : array(NULL), _size(n)
     {
         if (n > 0)
             array = new t[n]();
     }
 
-    Array(const Array& copy)  : array(NULL)
+    Array(const Array &copy) : array(NULL)
     {
         _size = copy._size;
         array = new t[_size];
@@ -28,7 +28,7 @@ public:
             array[i] = copy.array[i];
     }
 
-    Array& operator=(const Array& other)
+    Array &operator=(const Array &other)
     {
         if (this != &other)
         {
@@ -44,9 +44,9 @@ public:
         return *this;
     }
 
-    ~Array() {delete[] array;}
+    ~Array() { delete[] array; }
 
-    t& operator[](unsigned int index)
+    t &operator[](unsigned int index)
     {
         if (index >= _size)
             throw std::out_of_range("array index out of bounds");
@@ -58,10 +58,5 @@ public:
         return _size;
     }
 };
-
-
-
-
-
 
 #endif

@@ -16,7 +16,6 @@ int main()
 {
     int a[] = {1, 2 , 3};
     const int b[] = {10, 20, 30};
-
     iter(a, 3, print<int>);
     std::cout << "=====" << std::endl;
     iter(a, 3, addOne);
