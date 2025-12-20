@@ -15,7 +15,6 @@ class AForm
         bool isSigned;
         const int gradeToSign;
         const int gradeToExecute;
-
     public:
         AForm(const std::string& name, int gradeToSign, int gradeToExecute);
         AForm(const AForm& copy);
@@ -46,9 +45,7 @@ class AForm
         {
             public:
                  const char *what() const throw();
-        };
-
-        
+        };   
 };
 
 std::ostream& operator<<(std::ostream& out, const AForm &f);

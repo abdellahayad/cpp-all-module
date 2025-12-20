@@ -29,7 +29,7 @@ bool Replace::proccess()
         
         content += line;
         if (!infile.eof())
-        content += '\n';
+            content += '\n';
     }
     
     if (infile.bad())
