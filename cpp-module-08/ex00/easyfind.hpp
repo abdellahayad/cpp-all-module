@@ -4,18 +4,8 @@
 
 #include <iostream>
 #include <vector>
-#include <exception>
 #include <algorithm>
 
-
-class notFound : public std::exception
-{
-    public:
-        virtual const char *what() const throw()
-        {
-            return ("value not found in container");
-        }
-};
 
 template <typename T>
 typename T::iterator easyfind(T& type, int value)
@@ -23,11 +13,19 @@ typename T::iterator easyfind(T& type, int value)
     typename T::iterator it;
     it = std::find(type.begin(), type.end(), value);
     if (it == type.end())
-        throw notFound();
+        throw std::runtime_error("value not found in container");
     return it;
 }
 
-
+template <typename T>
+typename  T::const_iterator easyfind(const T& type, int value)
+{
+    typename T::const_iterator it;
+    it = std::find(type.begin(), type.end(), value);
+    if (it == type.end())
+        throw std::runtime_error("value not found in container");
+    return it;
+}
 
 
 #endif

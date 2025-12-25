@@ -18,14 +18,14 @@ class Span
         ~Span();
         
         void addNumber(int n);
-        int longestSpan() const;
+        int longestSpan() const; 
         int shortestSpan() const;
 
         template <typename it>
         void addRange(it begin, it end)
         {
             if (numbers.size() + std::distance(begin, end) > maxSize)
-                throw std::exception();
+                throw std::out_of_range("out of range");
             numbers.insert(numbers.end(), begin, end);
         }
 };

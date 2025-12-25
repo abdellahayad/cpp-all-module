@@ -25,7 +25,6 @@ static bool is_float(const std::string &s)
     std::istringstream iss(cor);
     float f;
     iss >> f;
-
     return (iss.eof() && !iss.fail());
 }
 
