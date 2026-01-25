@@ -9,9 +9,10 @@ int main()
     
     const std::vector<int> v2 = v;
     
+    int a = 10;
     try
     {
-        std::vector<int>::iterator it = easyfind(v, 10);
+        std::vector<int>::iterator it = easyfind(v, a);
         std::cout << "Found value: " << *it << std::endl; 
 
         std::vector<int>::const_iterator it2 = easyfind(v2, 100);
@@ -19,6 +20,6 @@ int main()
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << a << e.what() << std::endl;
     }
 }

@@ -3,7 +3,7 @@
 
 Base *generate(void)
 {
-    std::srand(std::time(NULL));
+    std::srand(time(NULL));
     int r = rand() % 3;
 
     if (r == 0)

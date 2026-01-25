@@ -6,7 +6,7 @@ int main()
     Data data;
     data.number = 1337;
     data.name = "Abdellah";
-
+ 
     std::cout << "origin pointer: " << &data << std::endl;
 
     uintptr_t raw = Serializer::serialize(&data);

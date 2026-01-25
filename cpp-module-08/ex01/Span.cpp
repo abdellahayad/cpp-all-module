@@ -54,3 +54,5 @@ int Span::shortestSpan() const
     }
     return minSpan;
 }
+
+

@@ -11,6 +11,11 @@ void addOne(int &x)
 {
     x++;
 }
+void ft_toupper(std::string &str)
+{
+    for (size_t i = 0; i < str.size(); i++)
+        str[i] = std::toupper(str[i]);
+}
 
 int main()
 {
@@ -23,6 +28,10 @@ int main()
     std::cout << "=====" << std::endl;
     iter(b, 3, print<int>);
 
+    std::string str[] = {"abdellah", "ayad", "yassine"};
+    iter(str, 3, print<std::string>);
+    iter(str, 3, ft_toupper);
+    iter(str, 3, print<std::string>);
 
     return 0;
 }

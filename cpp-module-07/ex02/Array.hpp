@@ -20,15 +20,15 @@ public:
             array = new t[n]();
     }
 
-    Array(const Array &copy) : array(NULL)
+    Array(const Array& copy)
     {
         _size = copy._size;
         array = new t[_size];
         for (unsigned int i = 0; i < _size; i++)
-            array[i] = copy.array[i];
+            array[i]  = copy.array[i];
     }
 
-    Array &operator=(const Array &other)
+    Array &operator=(const Array& other)
     {
         if (this != &other)
         {
@@ -43,6 +43,7 @@ public:
         }
         return *this;
     }
+
 
     ~Array() { delete[] array; }
 
