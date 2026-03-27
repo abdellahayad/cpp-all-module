@@ -1,14 +1,14 @@
 # اسم البرنامج النهائي
-NAME = btc
+NAME = RPN
 
 # المترجم المستخدم
 CXX = c++
 
-# أعلام المترجم (تحسينات + تحذيرات صارمة)
+# أعلام المترجم
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # الملفات المصدرية (.cpp)
-SRCS = main.cpp BitcoinExchange.cpp
+SRCS = main.cpp RPN.cpp
 
 # ملفات الكائنات المترجمة (.o)
 OBJS = $(SRCS:.cpp=.o)
