@@ -1,27 +1,15 @@
 #include "BitcoinExchange.hpp"
-#include <iostream>  // لطباعة الرسائل
 
-// ====================== الدالة الرئيسية للبرنامج ======================
-int main(int argc, char *argv[])
+
+int main(int ac, char **av)
 {
-    // التحقق من أن المستخدم قدم اسم ملف الإدخال
-    // argc يحتوي على عدد المعاملات (اسم البرنامج + اسم الملف = 2)
-    if (argc != 2)
+    (void)av;
+    if (ac != 2)
     {
-        // إذا كان عدد المعاملات خاطئ، طباعة رسالة خطأ
         std::cerr << "Usage: ./btc <input_file>" << std::endl;
-        // إرجاع رمز خطأ (1)
         return (1);
     }
 
-    // إنشاء كائن من فئة BitcoinExchange
-    // المُنشئ سيقوم بتحميل بيانات الأسعار من data.csv تلقائياً
-    BitcoinExchange exchange;
-
-    // استدعاء الدالة لمعالجة ملف الإدخال
-    // argv[1] هو اسم ملف الإدخال (أول معامل بعد اسم البرنامج)
-    exchange.processFile(argv[1]);
-
-    // الإشارة إلى أن البرنامج انتهى بنجاح (رمز الخروج = 0)
-    return (0);
+    BitcoinExchange btc;
+    
 }
