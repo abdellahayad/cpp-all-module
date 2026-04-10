@@ -11,5 +11,6 @@ int main(int ac, char **av)
     }
 
     BitcoinExchange btc;
-    
+    btc.isValidDate("2012-04-17");
+    btc.processFile(av[1]);
 }

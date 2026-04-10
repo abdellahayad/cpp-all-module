@@ -7,6 +7,8 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+
 
 
 
@@ -18,16 +20,15 @@ class BitcoinExchange
         BitcoinExchange& operator=(const BitcoinExchange& other);
         ~BitcoinExchange();
 
-        void processFile(const std::string& str);
+        void processFile(const std::string& fileName);
 
-        private:
-        
-        
-        std::map<std::string, double> rates;
-        void loadData();
-        bool isValidDate(const std::string& date) const;
-        bool isValideValue(const std::string& value) const;
-        double getRate(const std::string& date) const;
+        // private:
+          
+            std::map<std::string, double> rates;
+            void loadData();
+            bool isValidDate(const std::string& date) const;
+            bool isValideValue(const std::string& value) const;
+            double getRate(const std::string& date) const;
 
 };
 
