@@ -134,6 +134,12 @@ void BitcoinExchange::processFile(const std::string &fileName)
         return ;
     }
 
+    if (file.peek() == std::ifstream::traits_type::eof())
+    {
+        std::cout << "Error: File is empty." << std::endl;
+        return ;
+    }
+
     std::string line;
     std::getline(file, line);
 
@@ -149,23 +155,46 @@ void BitcoinExchange::processFile(const std::string &fileName)
         std::string date = line.substr(0, pipe);
         std::string value = line.substr(pipe + 3);
         
+        // std::cout << pipe << " ======= " << date << " ========= " << value << std::endl;
         date.erase(0, date.find_first_not_of(" \t"));
         date.erase(date.find_last_not_of(" \t") + 1);
 
         value.erase(0, value.find_first_not_of(" \t"));
-        value.erase(value.find_last_not_of(" \t") + 1);\
+        value.erase(value.find_last_not_of(" \t") + 1);
 
-        std::cout << value << " <====> " << date << std::endl;
+        // std::cout << value << " <====> " << date << std::endl;
 
         if (!isValidDate(date))
         {
-            std::cerr << "Error: invalid value." << std::endl;
+            std::cerr << "Error: invalid date => " << date << std::endl;
             continue ;
         }
         if (!isValideValue(value))
         {
-            
+            char *end;
+            double num =std::strtod(value.c_str(), &end);
+
+            if (num < 0)
+                std::cerr << "Error: not a positive number" << std::endl;
+            else if (num > 1000)
+                std::cerr << "Error: too large number" << std::endl;
+            else 
+                std::cerr << "Error: invalid input" << std::endl;
+
+            continue ;
         }
 
+        double rate = getRate(date);
+
+        if (rate == -1)
+        {
+            std::cerr << "no rate found for date " << date << std::endl;
+            continue ;
+        }
+
+        double amount = std::strtod(value.c_str(), NULL);
+        double result = amount * rate;
+
+        std::cout << date << " => " << amount << " = " << result << std::endl;
     }
 }
