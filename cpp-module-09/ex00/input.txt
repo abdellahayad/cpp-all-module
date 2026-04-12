@@ -1,81 +1,10 @@
 date | value
 2011-01-03 | 3
 2011-01-03 | 2
-2011-01-03 | 1
+2090-01-03 | 1
 2011-01-03 | 1.2
 2011-01-09 | 1
 2012-01-11 | -1
 2001-42-42
 2012-01-11 | 1
 2012-01-11 | 2147483648
-void BitcoinExchange::processFile(const std::string& fileName)
-{
-    std::ifstream file(fileName.c_str());
-
-    if (!file.is_open())
-    {
-        std::cerr << "Error: could not open file." << std::endl;
-        return;
-    }
-
-    std::string line;
-    std::getline(file, line);
-
-    while (std::getline(file, line))
-    {
-        size_t divPos = line.find(" | ");
-
-        if (divPos == std::string::npos)
-        {
-            std::cerr << "Error: bad input => " << line << std::endl;
-            continue;
-        }
-
-        std::string date = line.substr(0, divPos);
-        std::string value = line.substr(divPos + 3);
-
-        date.erase(0, date.find_first_not_of(" \t"));
-        date.erase(date.find_last_not_of(" \t") + 1);
-
-        value.erase(0, value.find_first_not_of(" \t"));
-        value.erase(value.find_last_not_of(" \t") + 1);
-
-        if (!isValidDate(date))
-        {
-            std::cerr << "Error: invalid input => " << date << std::endl;
-            continue;
-        }
-
-        if (!isValideValue(value))
-        {
-            char *endptr;
-            double num = std::strtod(value.c_str(), &endptr);
-
-            if (num < 0)
-                std::cerr << "Error: not a positive number." << std::endl;
-            else if (num > 1000)
-                std::cerr << "Error: too large a number." << std::endl;
-            else
-                std::cerr << "Error: invalid input => " << value << std::endl;
-
-            continue;
-        }
-
-        double rate = getRateForDate(date);
-
-        if (rate == -1)
-        {
-            std::cerr << "Error: no rate found for date => " << date << std::endl;
-            continue;
-        }
-
-        double amount = std::strtod(value.c_str(), NULL);
-        double result = amount * rate;
-
-        std::cout << date << " => "
-                  << std::fixed << std::setprecision(2)
-                  << amount << " = " << result << std::endl;
-    }
-
-    file.close();
-}
