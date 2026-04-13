@@ -9,20 +9,15 @@
 #include <iostream>
 #include <stdexcept>
 
-// فئة لمعالجة وحساب التعبيرات الرياضية بصيغة البولندية العكسية (RPN)
 class RPN
 {
     public:
-        // المُنشِّئ الافتراضي
         RPN();
         
-        // منشِّئ النسخ
         RPN(const RPN& copy);
         
-        // عامل الإسناد
         RPN& operator=(const RPN& other);
         
-        // المُدمِّر
         ~RPN();
         
         // دالة حساب التعبير الرياضي

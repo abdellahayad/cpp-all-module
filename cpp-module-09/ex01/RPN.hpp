@@ -9,17 +9,27 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <algorithm>
+#include <deque>
 
 
-class RNP
+class RPN
 {
     public: 
-        RNP();
-        RNP(const RNP& copy);
-        RNP& operator=(const RNP& other);
-        ~RNP();
-
+        RPN();
+        RPN(const RPN& copy);
+        RPN& operator=(const RPN& other);
+        ~RPN();
         
+        int calculate(const std::string& str);
+    
+        private:
+            std::deque<double> stack;
+
+            bool isNum(const std::string& num) const;
+            bool isopr(const std::string& opr) const;
+
+            double applyOperation(double a, double b, char opr);
 };
 
 
