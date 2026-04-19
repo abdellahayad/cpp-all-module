@@ -126,7 +126,7 @@ double BitcoinExchange::getRate(const std::string &date) const
 
 void BitcoinExchange::processFile(const std::string &fileName)
 {
-    std::ifstream file(fileName);
+    std::ifstream file(fileName.c_str());
 
     if (!file.is_open())
     {
