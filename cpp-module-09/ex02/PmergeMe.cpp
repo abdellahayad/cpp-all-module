@@ -36,7 +36,8 @@ void PmergeMe::parsInput(int ac, char **av)
         if (std::find(vec.begin(), vec.end(), static_cast<int>(num)) != vec.end())
             throw std::runtime_error("Error: duplicate!");
         vec.push_back(static_cast<int>(num));
-    }
+        lst.push_back(static_cast<int>(num));
+    }  
 }
 void PmergeMe::printBefore() const
 {

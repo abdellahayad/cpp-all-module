@@ -10,6 +10,7 @@ class PmergeMe
 {
 private:
     std::vector<int> vec;
+    std::list<int> lst;
 public:
     PmergeMe();
     PmergeMe(const PmergeMe& copy);
