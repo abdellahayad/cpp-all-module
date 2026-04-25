@@ -8,10 +8,10 @@ int main(int ac, char ** av)
 
         merge.parsInput(ac, av);
         merge.printBefore();
+        merge.generateJacobsthal(30);
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    
 }

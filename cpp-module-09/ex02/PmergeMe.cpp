@@ -3,8 +3,8 @@
 
 PmergeMe::PmergeMe() {}
 PmergeMe::~PmergeMe() {}
-PmergeMe::PmergeMe(const PmergeMe& copy) : vec(copy.vec) {}
-PmergeMe& PmergeMe::operator=(const PmergeMe& other) {if (this != &other) vec = other.vec; return *this;}
+PmergeMe::PmergeMe(const PmergeMe& copy) : vec(copy.vec), lst(copy.lst) {}
+PmergeMe& PmergeMe::operator=(const PmergeMe& other) {if (this != &other) vec = other.vec; lst = other.lst; return *this;}
 
 
 static bool isNumber(const char *str)
@@ -36,11 +36,51 @@ void PmergeMe::parsInput(int ac, char **av)
         if (std::find(vec.begin(), vec.end(), static_cast<int>(num)) != vec.end())
             throw std::runtime_error("Error: duplicate!");
         vec.push_back(static_cast<int>(num));
+        lst.push_back(static_cast<int>(num));
     }
 }
 void PmergeMe::printBefore() const
 {
     for (size_t i = 0; i < vec.size(); i++)
         std::cout << vec[i] << " ";
+    std::cout << std::endl;
+}
+
+std::vector<int> PmergeMe::generateJacobsthal(int n)
+{
+    std::vector<int> jac;
+    if (n == 0)
+        return jac;
+    jac.push_back(1);
+    if (n == 1)
+        return jac;
+    jac.push_back(3);
+    while (jac.back() < n)
+    {
+        int next = jac.back() + 2 * jac[jac.size() - 2];
+        jac.push_back(next);
+    }
+    std::cout << jac.back() << std::endl;
+    return jac;
+}
+
+void PmergeMe::run()
+{
+    std::cout << "Before: ";
+    for (int i = 0; i > vec.size(); i++)
+        std::cout << vec[i] << " ";
+    std::cout << std::endl;
+
+    clock_t startV = clock();
+    std::vector<int> resV = sortVector(vec);
+    clock_t endV = clock();
+
+    clock_t startL = clock();
+    std::list<int> resL = sortList(lst);
+    clock_t endL = clock();
+
+    std::cout << "After: ";
+    for (int i = 0; i < resV.size(); i++)
+        std::cout << resV[i] << " ";
     std::cout << std::endl;
 }
