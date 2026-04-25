@@ -62,11 +62,8 @@ if (v.size() <= 1)
     std::vector<int> winners;
     for (size_t i = 0; i < pairs.size(); i++)
         winners.push_back(pairs[i].first);
-    std::cout << "==============open==================\n";
     std::vector<int> mainChain = sortVector(winners);
 
-    for (int i = 0;i < winners.size(); i++) std::cout << winners[i] << " ";
-    std::cout << "\n==================winners=================\n\n";
 
     std::vector<int> pend;
     for (size_t i = 0; i < mainChain.size(); i++)
@@ -80,10 +77,6 @@ if (v.size() <= 1)
             }
         }
     }
-    for (int i = 0;i < mainChain.size(); i++) std::cout << mainChain[i] << " ";
-    std::cout << "\n==================mainChain=================\n\n";
-    for (int i = 0;i < pend.size(); i++) std::cout << pend[i] << " ";
-    std::cout << "\n==================pend=================\n\n";
 
     std::vector<int> result = mainChain;
     
@@ -103,8 +96,7 @@ if (v.size() <= 1)
                 inserted[j] = true;
             }
         }
-        for (int i = 0;i < result.size(); i++) std::cout << result[i] << " ";
-        std::cout << "\n==================result=================\n\n";
+        
     }
     if (hasLeft)
         result.insert(std::lower_bound(result.begin(), result.end(), leftover), leftover);
