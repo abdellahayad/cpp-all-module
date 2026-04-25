@@ -225,6 +225,7 @@ void PmergeMe::run()
     double timeV = static_cast<double>(endV - startV) / CLOCKS_PER_SEC * 1000000;
     double timeL = static_cast<double>(endL - startL) / CLOCKS_PER_SEC * 1000000;
 
+    std::cout << std::fixed << std::setprecision(5);
     std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << timeV << " us" << std::endl;
     std::cout << "Time to process a range of " << lst.size() << " elements with std::list   : " << timeL << " us" << std::endl;
 }
