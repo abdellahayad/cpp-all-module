@@ -7,11 +7,10 @@ int main(int ac, char ** av)
         PmergeMe merge;
 
         merge.parsInput(ac, av);
-        merge.printBefore();
+        merge.run();
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    
 }

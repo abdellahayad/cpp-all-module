@@ -161,21 +161,185 @@ elif [ -f /var/log/secure ]; then
     echo "  Last 10 failed attempts: $failed_logins"
     if [ "$failed_logins" -gt 0 ]; then
         grep "Failed password" /var/log/secure 2>/dev/null | tail -5 | awk '{print "    " $1" "$2" "$3" - "$9" from "$11}'
-    fi
-else
-    echo "  Unable to read authentication logs (requires sudo)"
-fi
-
+#     # fi
+# # else
+#     # echo "  Unable to read authentication logs (requires sudo)"
+# # fi
+# # 
 # Network Statistics
-print_header "NETWORK STATISTICS"
-
-print_subheader "Active Network Interfaces:"
-ip -brief addr 2>/dev/null | grep UP | awk '{printf "  %-12s %s\n", $1, $3}' || ifconfig | grep -E "^[a-z]" | awk '{print "  " $1}'
-
-print_subheader "Network Connections:"
-echo "  Established: $(ss -tan 2>/dev/null | grep ESTAB | wc -l || netstat -tan 2>/dev/null | grep ESTABLISHED | wc -l)"
-echo "  Listening:   $(ss -tln 2>/dev/null | grep LISTEN | wc -l || netstat -tln 2>/dev/null | grep LISTEN | wc -l)"
-
-echo -e "${YELLOW}╔════════════════════════════════════════════════════════╗${NC}"
-echo -e "${YELLOW}║     Report generated: $(date '+%Y-%m-%d %H:%M:%S')              ║${NC}"
-echo -e "${YELLOW}╚════════════════════════════════════════════════════════╝${NC}\n"
+# # print_header "NETWORK STATISTICS"
+# # 
+# # print_subheader "Active Network Interfaces:"
+# # ip -brief addr 2>/dev/null | grep UP | awk '{printf "  %-12s %s\n", $1, $3}' || ifconfig | grep -E "^[a-z]" | awk '{print "  " $1}'
+# # 
+# # print_subheader "Network Connections:"
+# # echo "  Established: $(ss -tan 2>/dev/null | grep ESTAB | wc -l || netstat -tan 2>/dev/null | grep ESTABLISHED | wc -l)"
+# # echo "  Listening:   $(ss -tln 2>/dev/null | grep LISTEN | wc -l || netstat -tln 2>/dev/null | grep LISTEN | wc -l)"
+# # 
+# # echo -e "${YELLOW}╔════════════════════════════════════════════════════════╗${NC}"
+# # echo -e "${YELLOW}║     Report generated: $(date '+%Y-%m-%d %H:%M:%S')              ║${NC}"
+# # echo -e "${YELLOW}╚════════════════════════════════════════════════════════╝${NC}\n"
+# # 
+# 
+# 
+include "PmergeMe.hpp"
+# 
+# PmergeMe::PmergeMe() {}
+# PmergeMe::~PmergeMe() {}
+# 
+# // ==================== Jacobsthal Sequence ====================
+# // Generates: 1, 3, 5, 11, 21, 43...
+# std::vector<int> PmergeMe::generateJacobsthal(int n) {
+    # std::vector<int> jac;
+    # if (n == 0) return jac;
+    # jac.push_back(1);
+    # if (n == 1) return jac;
+    # jac.push_back(3);
+    # while (jac.back() < n) {
+        # int next = jac.back() + 2 * jac[jac.size() - 2];
+        # jac.push_back(next);
+    # }
+    # return jac;
+# }
+# 
+# // ==================== Vector Implementation ====================
+# std::vector<int> PmergeMe::sortVector(std::vector<int>& v) {
+    # if (v.size() <= 1) return v;
+# 
+    # // 1. Pairing
+    # std::vector<std::pair<int, int> > pairs;
+    # int leftover = -1;
+    # bool hasLeft = (v.size() % 2 != 0);
+    # for (size_t i = 0; i < v.size() - (hasLeft ? 1 : 0); i += 2) {
+        # if (v[i] > v[i+1]) pairs.push_back(std::make_pair(v[i], v[i+1]));
+        # else pairs.push_back(std::make_pair(v[i+1], v[i]));
+    # }
+    # if (hasLeft) leftover = v.back();
+# 
+    # // 2. Recursive Sort (Main Chain)
+    # std::vector<int> winners;
+    # for (size_t i = 0; i < pairs.size(); i++) winners.push_back(pairs[i].first);
+    # std::vector<int> mainChain = sortVector(winners);
+# 
+    # // 3. Prepare Losers (Pend)
+    # std::vector<int> pend;
+    # for (size_t i = 0; i < mainChain.size(); i++) {
+        # for (size_t j = 0; j < pairs.size(); j++) {
+            # if (mainChain[i] == pairs[j].first) {
+                # pend.push_back(pairs[j].second);
+                # break;
+            # }
+        # }
+    # }
+# 
+    # // 4. Insertion using Jacobsthal & Binary Search
+    # std::vector<int> result = mainChain;
+    # result.insert(result.begin(), pend[0]); // b1 is always smaller than a1
+# 
+    # std::vector<int> jac = generateJacobsthal(pend.size());
+    # std::vector<bool> inserted(pend.size(), false);
+    # inserted[0] = true;
+# 
+    # for (size_t i = 0; i < jac.size(); i++) {
+        # int target = std::min(jac[i], (int)pend.size());
+        # for (int j = target - 1; j >= 0; j--) {
+            # if (!inserted[j]) {
+                # // std::lower_bound is a built-in Binary Search
+                # result.insert(std::lower_bound(result.begin(), result.end(), pend[j]), pend[j]);
+                # inserted[j] = true;
+            # }
+        # }
+    # }
+    # if (hasLeft)
+        # result.insert(std::lower_bound(result.begin(), result.end(), leftover), leftover);
+    # return result;
+# }
+# 
+# // ==================== List Implementation ====================
+# std::list<int> PmergeMe::sortList(std::list<int>& l) {
+    # if (l.size() <= 1) return l;
+# 
+    # // 1. Pairing
+    # std::list<std::pair<int, int> > pairs;
+    # int leftover = -1;
+    # bool hasLeft = (l.size() % 2 != 0);
+    # std::list<int>::iterator it = l.begin();
+    # for (size_t i = 0; i < l.size() / 2; i++) {
+        # int a = *it++; int b = *it++;
+        # if (a > b) pairs.push_back(std::make_pair(a, b));
+        # else pairs.push_back(std::make_pair(b, a));
+    # }
+    # if (hasLeft) leftover = l.back();
+# 
+    # // 2. Recursive Sort
+    # std::list<int> winners;
+    # for (std::list<std::pair<int, int> >::iterator p = pairs.begin(); p != pairs.end(); ++p)
+        # winners.push_back(p->first);
+    # std::list<int> mainChain = sortList(winners);
+# 
+    # // 3. Prepare Pend (Losers)
+    # std::vector<int> pend; // Using vector for pend makes Jacobsthal index access easy
+    # for (std::list<int>::iterator m = mainChain.begin(); m != mainChain.end(); ++m) {
+        # for (std::list<std::pair<int, int> >::iterator p = pairs.begin(); p != pairs.end(); ++p) {
+            # if (*m == p->first) { pend.push_back(p->second); break; }
+        # }
+    # }
+# 
+    # // 4. Insertion
+    # std::list<int> result = mainChain;
+    # result.push_front(pend[0]);
+# 
+    # std::vector<int> jac = generateJacobsthal(pend.size());
+    # std::vector<bool> inserted(pend.size(), false);
+    # inserted[0] = true;
+# 
+    # for (size_t i = 0; i < jac.size(); i++) {
+        # int target = std::min(jac[i], (int)pend.size());
+        # for (int j = target - 1; j >= 0; j--) {
+            # if (!inserted[j]) {
+                # result.insert(std::lower_bound(result.begin(), result.end(), pend[j]), pend[j]);
+                # inserted[j] = true;
+            # }
+        # }
+    # }
+    # if (hasLeft)
+        # result.insert(std::lower_bound(result.begin(), result.end(), leftover), leftover);
+    # return result;
+# }
+# 
+# // ==================== Parse & Run ====================
+# 
+# void PmergeMe::parseInput(int ac, char **av) {
+    # for (int i = 1; i < ac; i++) {
+        # std::string s(av[i]);
+        # if (s.find_first_not_of("0123456789") != std::string::npos) throw std::runtime_error("Error");
+        # long n = std::atol(av[i]);
+        # if (n <= 0 || n > INT_MAX) throw std::runtime_error("Error");
+        # _vec.push_back((int)n);
+        # _lst.push_back((int)n);
+    # }
+# }
+# 
+# void PmergeMe::run() {
+    # std::cout << "Before: ";
+    # for (size_t i = 0; i < _vec.size(); i++) std::cout << _vec[i] << " ";
+    # std::cout << "\n";
+# 
+    # clock_t startV = clock();
+    # std::vector<int> resV = sortVector(_vec);
+    # clock_t endV = clock();
+# 
+    # clock_t startL = clock();
+    # std::list<int> resL = sortList(_lst);
+    # clock_t endL = clock();
+# 
+    # std::cout << "After:  ";
+    # for (size_t i = 0; i < resV.size(); i++) std::cout << resV[i] << " ";
+    # std::cout << "\n";
+# 
+    # double tV = (double)(endV - startV) / CLOCKS_PER_SEC * 1e6;
+    # double tL = (double)(endL - startL) / CLOCKS_PER_SEC * 1e6;
+# 
+    # std::cout << "Time for vector: " << std::fixed << std::setprecision(5) << tV << " us\n";
+    # std::cout << "Time for list:   " << tL << " us\n";
+# }
