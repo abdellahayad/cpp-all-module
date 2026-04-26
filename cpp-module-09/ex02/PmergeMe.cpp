@@ -71,13 +71,13 @@ std::vector<int> PmergeMe::sortVector(std::vector<int> &v)
     if (v.size() <= 1)
         return v;
 
-    std::vector<std::pair<int, int>> pair;
+    std::vector<std::pair<int, int> > pair;
     int leftOvr = -1;
     bool hasLeft = (v.size() % 2 != 0);
     size_t limit = v.size();
     if (hasLeft)
         limit--;
-    for (int i = 0; i < limit; i += 2)
+    for (size_t i = 0; i < limit; i += 2)
     {
         if (v[i] > v[i + 1])
             pair.push_back(std::make_pair(v[i], v[i + 1]));
@@ -87,7 +87,7 @@ std::vector<int> PmergeMe::sortVector(std::vector<int> &v)
     if (hasLeft)
         leftOvr = v.back();
     std::vector<int> winners;
-    for (int i = 0; i < pair.size(); i++)
+    for (size_t i = 0; i < pair.size(); i++)
         winners.push_back(pair[i].first);
     std::vector<int> mainChain = sortVector(winners);
 
@@ -133,13 +133,14 @@ std::list<int> PmergeMe::sortList(std::list<int> &l)
     if (l.size() <= 1)
         return l;
 
-    std::list<std::pair<int, int>> pair;
+    std::list<std::pair<int, int> > pair;
     int leftOvr = -1;
     bool hasLeft = (l.size() % 2 != 0);
 
     size_t limit = l.size();
     if (hasLeft)
         limit--;
+        
     std::list<int>::iterator it = l.begin();
     for (size_t i = 0; i < limit; i += 2)
     {
@@ -155,7 +156,7 @@ std::list<int> PmergeMe::sortList(std::list<int> &l)
         leftOvr = l.back();
 
     std::list<int> winners;
-    for (std::list<std::pair<int, int>>::iterator itr = pair.begin(); itr != pair.end(); ++itr)
+    for (std::list<std::pair<int, int> >::iterator itr = pair.begin(); itr != pair.end(); ++itr)
         winners.push_back(itr->first);
 
     std::list<int> mainChain = sortList(winners);
@@ -163,7 +164,7 @@ std::list<int> PmergeMe::sortList(std::list<int> &l)
     std::list<int> pend;
     for (std::list<int>::iterator mit = mainChain.begin(); mit != mainChain.end(); ++mit)
     {
-        for (std::list<std::pair<int, int>>::iterator pit = pair.begin(); pit != pair.end(); ++pit)
+        for (std::list<std::pair<int, int> >::iterator pit = pair.begin(); pit != pair.end(); ++pit)
         {
             if (*mit == pit->first)
             {
@@ -198,20 +199,27 @@ std::list<int> PmergeMe::sortList(std::list<int> &l)
     return result;
 }
 
+long long time_in_us()
+{
+    struct timeval tm;
+    gettimeofday(&tm, NULL);
+    return (static_cast<long long>(tm.tv_sec) * 1000000) + tm.tv_usec;
+}
+
 void PmergeMe::run()
 {
     std::cout << "Before: ";
-    for (int i = 0; i < vec.size(); i++)
+    for (size_t i = 0; i < vec.size(); i++)
         std::cout << vec[i] << " ";
     std::cout << std::endl;
 
-    clock_t startV = clock();
+    long long startV = time_in_us();
     std::vector<int> resV = sortVector(vec);
-    clock_t endV = clock();
+    long long endV = time_in_us();
 
-    clock_t startL = clock();
+    long long startL = time_in_us();
     std::list<int> resL = sortList(lst);
-    clock_t endL = clock();
+    long long endL = time_in_us();
 
     // std::cout << "After: ";
     // for (size_t i = 0; i < resV.size(); i++)
@@ -222,8 +230,8 @@ void PmergeMe::run()
         std::cout << *l << " ";
     std::cout << std::endl;
 
-    double timeV = static_cast<double>(endV - startV) / CLOCKS_PER_SEC * 1000000;
-    double timeL = static_cast<double>(endL - startL) / CLOCKS_PER_SEC * 1000000;
+    double timeV = static_cast<double>(endV - startV);
+    double timeL = static_cast<double>(endL - startL);
 
     std::cout << std::fixed << std::setprecision(5);
     std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << timeV << " us" << std::endl;

@@ -14,7 +14,7 @@ int main(int ac, char **av)
     {
         RPN rpn;
 
-        int res = rpn.calculate(av[1]);
+        int res = rpn.calc  ulate(av[1]);
         
         std::cout << res << std::endl;
 
