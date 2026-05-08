@@ -10,9 +10,17 @@ int main(int ac, char **av)
         return (1);
     }
 
-    BitcoinExchange btc;
+    try
+    {
+        BitcoinExchange btc;
+        btc.processFile(av[1]);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     
-    btc.processFile(av[1]);
-
     return 0;
 }
+
+

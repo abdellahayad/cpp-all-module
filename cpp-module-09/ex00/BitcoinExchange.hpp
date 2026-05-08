@@ -28,17 +28,10 @@ class BitcoinExchange
             void loadData();
             bool isValidDate(const std::string& date) const;
             bool isValideValue(const std::string& value) const;
+            bool isValidHeader(const std::string& header, const std::string& value);
             double getRate(const std::string& date) const;
 
 };
-
-
-
-
-
-
-
-
 
 
 

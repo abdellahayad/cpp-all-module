@@ -25,7 +25,6 @@ public:
 
 
     void parsInput(int ac, char **av);
-    void printBefore() const;
     void run();
 
     std::vector<int> sortVector(std::vector<int>& v);

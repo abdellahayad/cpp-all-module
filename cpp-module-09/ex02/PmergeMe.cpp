@@ -46,12 +46,6 @@ void PmergeMe::parsInput(int ac, char **av)
         lst.push_back(static_cast<int>(num));
     }
 }
-void PmergeMe::printBefore() const
-{
-    for (size_t i = 0; i < vec.size(); i++)
-        std::cout << vec[i] << " ";
-    std::cout << std::endl;
-}
 
 std::vector<int> PmergeMe::generateJacobsthal(int n)
 {

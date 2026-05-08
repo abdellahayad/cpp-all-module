@@ -22,13 +22,20 @@ void BitcoinExchange::loadData()
 
     if (!file.is_open())
     {
-        std::cerr << "Error: cannot open data.csv";
+        // std::cerr << "Error: cannot open data.csv" << std::endl;
+        throw std::invalid_argument("Error: cannot open data.cs");
         return;
     }
 
     std::string line;
 
     std::getline(file, line);
+    if (!isValidHeader(line, "date,exchange_rate"))
+    {
+        // std::cerr << "Error: invalid format" << std::endl;
+        throw std::invalid_argument("Error: invalid format(data)");
+        return;
+    }
     while (std::getline(file, line))
     {
         std::stringstream iss(line);
@@ -99,15 +106,26 @@ bool BitcoinExchange::isValideValue(const std::string &value) const
     if (*end != '\0')
         return false;
 
-    if (number < 0 || number > 100)
+    if (number < 0 || number > 1000)
         return false;
 
     return true;
 }
 
+bool BitcoinExchange::isValidHeader(const std::string& header, const std::string& value)
+{
+    std::string result = "";
+    for (size_t i = 0; i < header.size(); ++i)
+    {
+        if (header[i] != ' ' && header[i] != '\t' && header[i] != '\r')
+            result += header[i];
+    }
+    return (result == value);
+}
+
 double BitcoinExchange::getRate(const std::string &date) const
 {
-    std::map<std::string, double>::const_iterator it;
+    std::map<std::string, double>::const_iterator it;  // find ?
 
     it = rates.find(date);
 
@@ -134,7 +152,7 @@ void BitcoinExchange::processFile(const std::string &fileName)
         return ;
     }
 
-    if (file.peek() == std::ifstream::traits_type::eof())
+    if (file.peek() == -1)
     {
         std::cout << "Error: File is empty." << std::endl;
         return ;
@@ -142,7 +160,11 @@ void BitcoinExchange::processFile(const std::string &fileName)
 
     std::string line;
     std::getline(file, line);
-
+    if (!isValidHeader(line, "date|value"))
+    {
+        std::cout << "Error: invalid format(input)." << std::endl;
+        return ;
+    }
     while(std::getline(file, line))
     {
         size_t pipe = line.find(" | ");
