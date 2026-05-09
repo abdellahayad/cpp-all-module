@@ -22,9 +22,7 @@ void BitcoinExchange::loadData()
 
     if (!file.is_open())
     {
-        // std::cerr << "Error: cannot open data.csv" << std::endl;
         throw std::invalid_argument("Error: cannot open data.cs");
-        return;
     }
 
     std::string line;
@@ -32,9 +30,7 @@ void BitcoinExchange::loadData()
     std::getline(file, line);
     if (!isValidHeader(line, "date,exchange_rate"))
     {
-        // std::cerr << "Error: invalid format" << std::endl;
         throw std::invalid_argument("Error: invalid format(data)");
-        return;
     }
     while (std::getline(file, line))
     {
@@ -46,8 +42,6 @@ void BitcoinExchange::loadData()
         {
             double rate = strtod(ratestr.c_str(), NULL);
             rates[date] = rate;
-            // std::cout << date << "--";
-            // std::cout << rates[date] << std::endl;
         }
     }
     file.close();
@@ -71,7 +65,6 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
     int month = strtol(date.substr(5, 2).c_str(), NULL, 10);
     int day = strtol(date.substr(8, 2).c_str(), NULL, 10);
 
-    // std::cout << year << " - " << month << " - " << day << std::endl;
 
     if (year < 2009 || year > 2024)
         return false;
@@ -125,7 +118,7 @@ bool BitcoinExchange::isValidHeader(const std::string& header, const std::string
 
 double BitcoinExchange::getRate(const std::string &date) const
 {
-    std::map<std::string, double>::const_iterator it;  // find ?
+    std::map<std::string, double>::const_iterator it;
 
     it = rates.find(date);
 
@@ -167,7 +160,7 @@ void BitcoinExchange::processFile(const std::string &fileName)
     }
     while(std::getline(file, line))
     {
-        size_t pipe = line.find(" | ");
+        size_t pipe = line.find("|");
         if (pipe == std::string::npos)
         {
             std::cerr << "Error: bad input => " << line << std::endl;
@@ -175,16 +168,14 @@ void BitcoinExchange::processFile(const std::string &fileName)
         }
 
         std::string date = line.substr(0, pipe);
-        std::string value = line.substr(pipe + 3);
+        std::string value = line.substr(pipe + 1);
         
-        // std::cout << pipe << " ======= " << date << " ========= " << value << std::endl;
         date.erase(0, date.find_first_not_of(" \t"));
         date.erase(date.find_last_not_of(" \t") + 1);
 
         value.erase(0, value.find_first_not_of(" \t"));
         value.erase(value.find_last_not_of(" \t") + 1);
 
-        // std::cout << value << " <====> " << date << std::endl;
 
         if (!isValidDate(date))
         {

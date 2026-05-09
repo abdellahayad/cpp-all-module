@@ -94,6 +94,5 @@ int RPN::calculate(const std::string& str)
 
     if (stack.size() != 1)
         throw std::runtime_error("Error: invalid expression");
-
     return (static_cast<int>(stack.back()));
 }

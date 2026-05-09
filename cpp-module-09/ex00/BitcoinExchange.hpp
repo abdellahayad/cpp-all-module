@@ -22,7 +22,7 @@ class BitcoinExchange
 
         void processFile(const std::string& fileName);
 
-        // private:
+    private:
           
             std::map<std::string, double> rates;
             void loadData();
