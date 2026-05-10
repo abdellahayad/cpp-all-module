@@ -17,6 +17,7 @@ class Span
         Span(const Span& copy);
         Span &operator=(const Span& other);
         ~Span();
+        
         void addNumber(int n);
         int longestSpan() const; 
         int shortestSpan() const;

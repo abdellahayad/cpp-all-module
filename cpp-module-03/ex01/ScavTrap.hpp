@@ -3,7 +3,7 @@
 
 #include "ClapTrap.hpp"
 
-class ScavTrap : protected ClapTrap
+class ScavTrap : public ClapTrap
 {
     private:
         bool guardMode;
